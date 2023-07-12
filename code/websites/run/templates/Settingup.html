@@ -9,6 +9,23 @@
       font-family: Arial, sans-serif;
       background-color: #f2f2f2;
     }
+
+    h2 a{
+        width: 50px;
+        color: black;
+        text-align: left;
+        padding: 12px;
+        text-decoration: none;
+        font-weight:bold;
+    }
+
+    h2:hover{
+        width: 72px;
+        height: 36px;
+        background-color: #DDDDDD;
+        border-radius: 10px;
+    }
+
     .container {
       max-width: 400px;
       margin: 0 auto;
@@ -50,18 +67,20 @@
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>用户注册</h1>
-    <form id="registerForm" action="/register" method="POST">
-      <label for="username">用户名:</label>
-      <input type="text" id="username" name="username" required><br><br>
-      <label for="password">密码:</label>
-      <input type="password" id="password" name="password" required><br><br>
-      <label for="confirmPassword">确认密码:</label>
-      <input type="password" id="confirmPassword" name="confirmPassword" required><br><br>
-      <input type="submit" value="注册">
-    </form>
+    <header>
+        <h2><a href="./Homepage.html">返回</a></h2>
+    </header>
+    <div class="container">
+        <h1>用户注册</h1>
+        <form id="registerForm" action="/Settingup/" method="POST">
+          <label for="username">用户名:</label>
+          <input type="text" id="username" name="username" required><br><br>
+          <label for="password">密码:</label>
+          <input type="password" id="password" name="password" required><br><br>
+          <label for="confirmPassword">确认密码:</label>
+          <input type="password" id="confirmPassword" name="confirmPassword" required><br><br>
+          <input type="submit" value="注册">
+        </form>
   </div>
-
 </body>
 </html>
