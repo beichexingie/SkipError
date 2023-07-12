@@ -1,23 +1,19 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from django.http import HttpResponse
-from django.template import RequestContext
 
 from django.shortcuts import render
 
 import requests
-import queue
-import urllib
+
 try:
     import simplejson as json
 except:
     import json
-from collections import defaultdict
 import jieba
 import re
 import _pickle as pickle
 
-import build_dict
+from code.websites.AIqa import build_dict
 
 #attr_map = build_dict.load_attr_map("/mnt/demo/search/data/attr_mapping.txt")
 #attr_ac = cPickle.load(open("/mnt/demo/search/data/attr_ac.pkl","rb"))
