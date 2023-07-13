@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkipError-首页</title>
+    <style>
+      /* CSS样式 */
+      nav ul.home_page {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        background-color: #FFFFFF;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+      }
+
+      nav ul.home_page li {
+        float: center;
+      }
+
+      nav ul.home_page li a {
+        display: block;
+        color: black;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        font-weight:bold;
+      }
+
+      nav ul.home_page li a:hover {
+        background-color: #DDDDDD;
+        border-radius: 10px;
+      }
+
+      nav ul.home_page Person{
+
+      }
+
+      .search-form {
+      text-align: center;
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 30vh;
+    }
+
+    .search-input {
+      width: 400px;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    .search-button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #333;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    </style>
+  </head>
+  <body>
+    <nav> <!-- 本站统一的导航栏 -->
+      <ul class="home_page">
+        <img src="image/head.png" alt="Head" width="50" height="43">
+        <li><a href="./Homepage.html">首页</a></li>
+        <li><a href="./Language_square.html">语言广场</a></li>
+        <li><a href="./AI_qua_ans.html">AI问答</a></li>
+        <li><a href="./About_us.html">问题反馈</a></li>
+        <img src="image/person.png" alt="Person" width="50" height="50">
+        <img src="image/Settings.png" alt="Settings" width="50" height="50">
+      </ul>
+    </nav>
+    <div class="search-form"><!-- 需要接入搜索的URL -->
+        <form action="#" method="GET" target="_blank">
+            <input type="text" class="search-input" name="q" placeholder="请输入搜索关键词" required>
+            <button type="submit" class="search-button">搜索</button>
+        </form>
+    </div>
+  </body>
+</html>
