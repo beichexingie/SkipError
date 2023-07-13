@@ -442,9 +442,8 @@ def _map_predicate(pred_name, map_attr=True):   #找出一个字符串中是否�
         return ans
 
     match = []
-    #for w in attr_ac.iter(pred_name.encode('utf-8')):
-    for w in attr_ac.iter('Modelica的InitialValueProblem'):
-    #for w in attr_ac.iter(pred_name):
+#避免出现typeerror
+    for w in attr_ac.iter(pred_name):
         #match.append(w[1][1].decode('utf-8'))
         match.append(w[1][1])
     if not len(match):
