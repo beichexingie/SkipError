@@ -104,23 +104,23 @@
       // 根据点击的小标题设置不同的标题和内容
       if (page === 'page1') {
         title = '变量声明';
-        body1 = '<p>模型定义的特征之一就是包含变量声明。变量声明的基本语法就是在变量的“类型”之后紧随变量的名称；</p><img src="image/1.1.jpg" alt="1.1"><p>相同类型的变量可以组合在一起使用下面的语法；</p>';
-        body2 = '<img src="image/1.2.jpg" alt="1.2"><p>变量声明也可以跟随在描述的后面。</p><img src="image/1.3.jpg" alt="1.3">';
+        body1 = '<p>模型定义的特征之一就是包含变量声明。变量声明的基本语法就是在变量的“类型”之后紧随变量的名称；</p><img src="static/1.1.jpg" alt="1.1"><p>相同类型的变量可以组合在一起使用下面的语法；</p>';
+        body2 = '<img src="static/1.2.jpg" alt="1.2"><p>变量声明也可以跟随在描述的后面。</p><img src="static/1.3.jpg" alt="1.3">';
       } else if (page === 'page2') {
         title = '构建数组';
-        body1 = '<p>用于构建数组最简单的方法是枚举每一个单独的元素。例如，下面的参数声明表明变量 x 为向量；</p><img src="image/2.1.jpg" alt="2.1"><p>我们在此使用“向量”这个术语时，其指代的是仅有一个维度下标的数组。如果想要为向量赋值，我们可以这样做；</p>';
-        body2 = '<img src="image/2.2.jpg" alt="2.2"><p>显然，变量x是（被声明为）有三个实值分量的向量。为了保持一致性，等式的右侧也必须是具有三个实值分量的向量。表达式 {1.0, 0.0, -1.0} 是Modelica里用于创建向量的一种特殊语法。用这种由包含着以逗号分隔的一系列表达式的一对{}，我们可以用这种语法来构任何大小的向量。如：</p>';
-        body3 = '<img src="image/2.3.jpg" alt="2.3"><p>尽管可以使用 {} 表示法来构建任何维度的数组，如：</p><img src="image/2.4.jpg" alt="2.4">';
+        body1 = '<p>用于构建数组最简单的方法是枚举每一个单独的元素。例如，下面的参数声明表明变量 x 为向量；</p><img src="static/2.1.jpg" alt="2.1"><p>我们在此使用“向量”这个术语时，其指代的是仅有一个维度下标的数组。如果想要为向量赋值，我们可以这样做；</p>';
+        body2 = '<img src="static/2.2.jpg" alt="2.2"><p>显然，变量x是（被声明为）有三个实值分量的向量。为了保持一致性，等式的右侧也必须是具有三个实值分量的向量。表达式 {1.0, 0.0, -1.0} 是Modelica里用于创建向量的一种特殊语法。用这种由包含着以逗号分隔的一系列表达式的一对{}，我们可以用这种语法来构任何大小的向量。如：</p>';
+        body3 = '<img src="static/2.3.jpg" alt="2.3"><p>尽管可以使用 {} 表示法来构建任何维度的数组，如：</p><img src="static/2.4.jpg" alt="2.4">';
       } else if (page === 'page3') {
         title = '定义组织';
-        body1 = '<p>正如我们在本章所了解的一样，package 是一种允许我们对定义进行组织（包含其它包的定义）的 Modelica 实体。package 的语法定义与其它 Modelica 定义有很多共同点。定义包的一般语法是：</p><img src="image/3.1.jpg" alt="3.1">';
-        body2 = '<p>包定义可用 encapsulated 限定词作为前缀。我们将在考察的 Modelica 的查找规则 ( 150) 时进行进一步讨论。 如果必要包也可以进行嵌套例如：</p><img src="image/3.2.jpg" alt="3.2">';
+        body1 = '<p>正如我们在本章所了解的一样，package 是一种允许我们对定义进行组织（包含其它包的定义）的 Modelica 实体。package 的语法定义与其它 Modelica 定义有很多共同点。定义包的一般语法是：</p><img src="static/3.1.jpg" alt="3.1">';
+        body2 = '<p>包定义可用 encapsulated 限定词作为前缀。我们将在考察的 Modelica 的查找规则 ( 150) 时进行进一步讨论。 如果必要包也可以进行嵌套例如：</p><img src="static/3.2.jpg" alt="3.2">';
         body3 = '<p>实际上，包嵌套十分常见。这使我们能够表达复杂的分类。</p>';
       } else if (page === 'page4') {
         title = '函数';
-        body1 = '<p>基本的 Modelica 函数都包含一个或多个参数、一个函数返回值以及根据参数计算函数返回值的 algorithm。函数的输入参数以限定词input进行声明。函数的返回值以限定词 output 进行声明。例如，以下述简单函数为例，函数计算输入参数的平方值：</p><img src="image/4.1.jpg" alt="4.1">';
+        body1 = '<p>基本的 Modelica 函数都包含一个或多个参数、一个函数返回值以及根据参数计算函数返回值的 algorithm。函数的输入参数以限定词input进行声明。函数的返回值以限定词 output 进行声明。例如，以下述简单函数为例，函数计算输入参数的平方值：</p><img src="static/4.1.jpg" alt="4.1">';
         body2 = '<p>在上述例子中，输入变量x的类型为Real。输出变量y同样也是Real 类型。函数的参数和返回值可以是标量或数组。函数Modelica实例教程, 中间变量对于复杂的计算过程，通过定义变量保存中间结果将会非常有帮助。这些变量必须与函数的参数和返回值明确的区分。为了声明这些中间变量，我们以限定词 protected 进行声明。以 protected 形式声明这些变量是为了告诉Modelica编译器这些变量既不是函数的参数也不是函数的返回值，而是函数计算过程中内部使用的变量。例如，如果我们希望编写一个函数来计算圆的周长，那就可能需要一个中间变量来储存圆的直径，即：</p>';
-        body3 = '<img src="image/4.2.jpg" alt="4.2"><p>在上述例子中，我们可以看到中间结果或公用子表达式可以与某个中间变量相关联。 默认的输入参数在某些情况下，有必要为某些输入参数设置默认值。这种情况下，在声明输入参数时就可以包含了默认值。考虑如下计算物体势能的函数：</p><img src="image/4.3.jpg" alt="4.3"><p>为参数 g 设定默认值后，用户调用此函数时就不必每次都为 g 赋值了。当然，这种情况只适用于给定参数具有合理默认值的情况。</p>';
+        body3 = '<img src="static/4.2.jpg" alt="4.2"><p>在上述例子中，我们可以看到中间结果或公用子表达式可以与某个中间变量相关联。 默认的输入参数在某些情况下，有必要为某些输入参数设置默认值。这种情况下，在声明输入参数时就可以包含了默认值。考虑如下计算物体势能的函数：</p><img src="static/4.3.jpg" alt="4.3"><p>为参数 g 设定默认值后，用户调用此函数时就不必每次都为 g 赋值了。当然，这种情况只适用于给定参数具有合理默认值的情况。</p>';
       }
 
       // 更新内容
@@ -131,13 +131,13 @@
 <body>
     <nav> <!-- 本站统一的导航栏 -->
       <ul class="home_page">
-        <a href="./Firstpage.html"><img src="image/head.png" alt="Head" width="50" height="43"></a>
+        <a href="./Firstpage.html"><img src="static/head.png" alt="Head" width="50" height="43"></a>
         <li><a href="./Homepage.html">首页</a></li>
         <li><a href="./Language_square.html">语言广场</a></li>
         <li><a href="./AI_qua_ans.html">AI问答</a></li>
         <li><a href="./About_us.html">问题反馈</a></li>
-        <a href="./Login.html"><img src="image/person.png" alt="Person" width="50" height="50"></a>
-        <img src="image/Settings.png" alt="Settings" width="50" height="50">
+        <a href="./Login.html"><img src="static/person.png" alt="Person" width="50" height="50"></a>
+        <img src="static/Settings.png" alt="Settings" width="50" height="50">
       </ul>
     </nav>
 
@@ -155,7 +155,8 @@
     <!-- 主内容区 -->
     <div id="main-content">
         <h1>知识图谱</h1>
-        <p>这是主要内容区域。</p>
+        <p>以下是基于Modelica语言不同知识点的点击量生成的饼图：</p>
+        <img src="static/chart.png" alt="chart" width="850" height="850">
     </div>
 </body>
 </html>

@@ -97,23 +97,31 @@
       font-weight:bold;
     }
     </style>
+    <script language="javascript" type="text/javascript">
+        function sendMessage(){
+            var message = document.sendMessage("q").value;
+            if(q == "Modelica"){
+                window.location.href="./Language_square.html";
+            }
+        }
+    </script>
   </head>
   <body>
     <nav> <!-- 本站统一的导航栏 -->
       <ul class="home_page">
-        <a href="./Firstpage.html"><img src="image/head.png" alt="Head" width="50" height="43"></a>
+        <a href="./Firstpage.html"><img src="static/head.png" alt="Head" width="50" height="43"></a>
         <li><a href="./Homepage.html">首页</a></li>
         <li><a href="./Language_square.html">语言广场</a></li>
         <li><a href="./AI_qua_ans.html">AI问答</a></li>
         <li><a href="./About_us.html">问题反馈</a></li>
-        <a href="./Login.html"><img src="image/person.png" alt="Person" width="50" height="50"></a>
-        <img src="image/Settings.png" alt="Settings" width="50" height="50">
+        <a href="./Login.html"><img src="static/person.png" alt="Person" width="50" height="50"></a>
+        <img src="static/Settings.png" alt="Settings" width="50" height="50">
       </ul>
     </nav>
     <div class="search-form"><!-- 需要接入搜索的URL -->
         <form action="#" method="GET" target="_blank">
             <input type="text" class="search-input" name="q" placeholder="请输入搜索关键词" required>
-            <button type="submit" class="search-button">搜索</button>
+            <button type="submit" class="search-button" onclick="location.href='Language_square.html'">搜索</button>
         </form>
     </div>
     <div class="name-list">

@@ -1,6 +1,6 @@
 import pymysql
 from flask import Flask, request
-
+from flask import render_template
 
 db = pymysql.connect(host='localhost',
                      user='root',
@@ -8,32 +8,29 @@ db = pymysql.connect(host='localhost',
                      database='user_auth',
                      port=3306)
 
-cursor = db.cursor()
-
 
 app = Flask(__name__)
 
-info = ["a", "b"]
 
-
-@app.route("/", methods=['POST', 'GET'])
+@app.route("/Register", methods=['POST', 'GET'])
 def submit_form():
-    user_name = request.form.get('username')
-    pass_word = request.form.get('password')
-    info[0] = user_name
-    info[1] = pass_word
-    return "用户注册成功！"
+    if request.method == 'POST':
+        user_name = request.form.get('username')
+        pass_word = request.form.get('password')
+
+        with db.cursor() as cursor:
+            sql = "INSERT INTO users (username, password) VALUES (user_name,pass_word)"
+            cursor.execute(sql, (user_name, pass_word))
+            db.commit()
+
+        return "用户注册成功！"
+
+    return render_template('Homepage.html')
 
 
 if __name__ == '__main__':
-    app.run(host='localhost', port=3306, debug=True)
+    app.run(host='127.0.0.1', port=5678, debug=True)
 
+# sql = "INSERT INTO users(username, password) VALUES(Username, Password)"
 
-Username = info[0]
-Password = info[1]
-
-sql = "INSERT INTO users(username, password) VALUES('apple','567890')"
-
-cursor.execute(sql)
-db.commit()
 db.close()
