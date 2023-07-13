@@ -1,0 +1,138 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkipError-首页</title>
+    <style>
+      /* CSS样式 */
+      nav ul.home_page {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        background-color: #FFFFFF;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+      }
+
+      nav ul.home_page li {
+        float: center;
+      }
+
+      nav ul.home_page li a {
+        display: block;
+        color: black;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        font-weight:bold;
+      }
+
+      nav ul.home_page li a:hover {
+        background-color: #DDDDDD;
+        border-radius: 10px;
+      }
+
+      .search-form {
+      text-align: center;
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 30vh;
+    }
+
+    .search-input {
+      width: 400px;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    .search-button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #333;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .name-list{
+      width: 480px;
+      height: 40%;
+      position:absolute;
+      top: 42%;
+      left: 31%;
+      background-color: #f5f5f5;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      border-radius: 8px;
+    }
+
+    .name-list h3{
+      padding: 20px;
+      margin: 0;
+      background-color: #333;
+      color: #fff;
+      border-radius: 8px;
+    }
+
+    .name-list ul.Languages{
+      text-align: left;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .name-list ul.Languages li{
+      padding: 15px;
+      border-bottom: 1px solid #ddd;
+      text-decoration: none;
+      font-weight:bold;
+    }
+    </style>
+    <script language="javascript" type="text/javascript">
+        function sendMessage(){
+            var message = document.sendMessage("q").value;
+            if(q == "Modelica"){
+                window.location.href="./Language_square.html";
+            }
+        }
+    </script>
+  </head>
+  <body>
+    <nav> <!-- 本站统一的导航栏 -->
+      <ul class="home_page">
+        <a href="{% url 'first' %}"><img src="{% static 'head.png' %}" alt="Head" width="50" height="43"></a>
+        <li><a href="{% url 'again' %}">首页</a></li>
+        <li><a href="{% url 'language' %}">语言广场</a></li>
+        <li><a href="{% url 'ai' %}">AI问答</a></li>
+        <li><a href="{% url 'abus' %}">问题反馈</a></li>
+        <a href="{% url 'lo' %}"><img src="{% static 'person.png' %}" alt="Person" width="50" height="50"></a>
+        <img src="{% static 'Settings.png' %}" alt="Settings" width="50" height="50">
+      </ul>
+    </nav>
+    <div class="search-form"><!-- 需要接入搜索的URL -->
+        <form action="./search" method="GET" target="_blank">
+            <input type="text" class="search-input" name="question" placeholder="请输入搜索关键词" required>
+            <button type="submit" class="search-button" onclick="href='{% url 'language' %}'">搜索</button>
+        </form>
+    </div>
+    <div class="name-list">
+        <h3>搜索推荐</h3>
+        <ul class="Languages">
+            <li>1 Modelica</li>
+            <li>2 C++</li>
+            <li>3 Python</li>
+            <li>4 Java</li>
+        </ul>
+    </div>
+  </body>
+</html>

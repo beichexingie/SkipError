@@ -1,0 +1,175 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit">
+    <title>SkipError-AI问答</title>
+    <style>
+    /* CSS样式 */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+
+    nav ul.home_page {
+        list-style-type: none;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        height: 60px;
+        background-color: #FFFFFF;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+      }
+
+      nav ul.home_page li {
+        float: center;
+      }
+
+      nav ul.home_page li a {
+        display: block;
+        color: black;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        font-weight:bold;
+      }
+
+      nav ul.home_page li a:hover {
+        background-color: #DDDDDD;
+        border-radius: 10px;
+      }
+
+    .container {
+      max-width: 800px;
+      margin: 80px auto;
+      padding: 40px;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+    }
+
+    .message-container {
+      display: block;
+      max-height: 300px;
+      overflow-y: scroll;
+      padding-bottom: 20px;
+    }
+
+    .message {
+      margin-bottom: 10px;
+      padding: 10px;
+      border-radius: 5px;
+    }
+
+    .user-message {
+      display: block;
+      background-color: #e2f0cb;
+      text-align: right;
+    }
+
+    .bot-message {
+      display: block;
+      background-color: #f4f4f4;
+      text-align: left;
+    }
+
+    .message-question {
+      display: block;
+      background-color: #e2f0cb;
+      text-align: right;
+    }
+
+    .message-answer {
+      background-color: #f4f4f4;
+      text-align: left;
+    }
+
+    .input-container{
+      display: flex;
+      margin-top: 20px;
+    }
+
+    #user-input {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+    }
+
+     #send-button{
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      background-color: #333;
+      color: #fff;
+      cursor: pointer;
+    }
+  </style>
+  <script>
+    // JavaScript代码
+    function check(){
+      var name = document.getElementById("inputtext").value;
+      if(name == "")
+        return false;
+    }
+    function sendMessage() {
+      var userInput = document.getElementById("user-input").value;
+      document.getElementById("user-input").value = "";
+      //var userMessage = document.createElement("div");
+      userMessage.className = "message message-question";
+      userMessage.innerHTML = "<p><strong>你:</strong> " + userInput + "</p>";
+      document.getElementById("message-container").appendChild(userMessage);
+
+      // 调用后端API或使用其他方法来实现对话生成
+
+      var botResponse = "{{ans}}";
+      var botMessage = document.createElement("div");
+      botMessage.className = "message message-answer";
+      botMessage.innerHTML = "<p><strong>SkipError:</strong> " + botResponse + "</p>";
+      document.getElementById("message-container").appendChild(botMessage);
+
+      // 滚动到底部以显示最新的消息
+      var messageContainer = document.getElementById("message-container");
+      messageContainer.scrollTop = messageContainer.scrollHeight;
+    }
+  </script>
+</head>
+<body>
+    <nav> <!-- 本站统一的导航栏 -->
+      <ul class="home_page">
+        <a href="{% url 'first' %}"><img src="{% static 'head.png' %}" alt="Head" width="50" height="43"></a>
+        <li><a href="{% url 'again' %}">首页</a></li>
+        <li><a href="{% url 'language' %}">语言广场</a></li>
+        <li><a href="{% url 'ai' %}">AI问答</a></li>
+        <li><a href="{% url 'abus' %}">问题反馈</a></li>
+        <a href="{% url 'lo' %}"><img src="{% static 'person.png' %}" alt="Person" width="50" height="50"></a>
+        <img src="{% static 'Settings.png' %}" alt="Settings" width="50" height="50">
+      </ul>
+    </nav>
+    <div class="container">
+        <h1>AI问答</h1>
+        <div class="message-container" id="message-container" action="{% url 'search' %}" method="GET">
+            <div class="message bot-message">
+                <p><strong>SkipError:</strong> 欢迎来到AI问答！请开始你的提问。</p>
+            </div>
+            <div class="message message-question" id="message-question">
+                <p><strong>我：</strong>{{question}}</p>
+            </div>
+            <div class="message message-answer" id="message-answer">
+                <p><strong>SkipError：</strong>{{ans}}</p>
+            </div>
+        </div>
+        <form class="input-container" action="{% url 'search' %}" method="GET">
+            <input type="text" id="user-input" name="question" placeholder="输入你的问题" value="{{question}}"/>
+            <button id="send-button" onclick="check()">发送</button>
+        </form>
+  </div>
+</body>
+</html>

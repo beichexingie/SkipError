@@ -147,4 +147,4 @@ if __name__ == '__main__':
 	# transform_triple2json("../data/Person.txt")
 	# transform_triple2json("../data/Org.txt")
 	# transform_triple2json("../data/Place.txt")
-	transform_entity2json("D:\perfect\code\data\\three.txt")
+	transform_entity2json("C:\\Users\ACER\PycharmProjects\SkipError\Code\data\\three.txt")

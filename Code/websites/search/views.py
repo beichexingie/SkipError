@@ -18,7 +18,7 @@ import re
 import _pickle as pickle
 
 import build_dict
-
+import logging
 #attr_map = build_dict.load_attr_map("/mnt/demo/search/data/attr_mapping.txt")
 #attr_ac = cPickle.load(open("/mnt/demo/search/data/attr_ac.pkl","rb"))
 #ent_dict = build_dict.load_entity_dict("/mnt/demo/search/data/all_entity.txt")
@@ -26,64 +26,103 @@ import build_dict
 
 
 
-attr_map = build_dict.load_attr_map("D:\perfect\code\kbdemo\search\data\\three_attr_mapping.txt")
-attr_ac = pickle.load(open("D:\perfect\code\kbdemo\search\data\\attr_ac.pkl","rb"))
-ent_dict = build_dict.load_entity_dict("D:\perfect\code\kbdemo\search\data\\all_entity.txt")
-val_dict = build_dict.load_val_dict("D:\perfect\code\data\\three_val.txt")
+attr_map = build_dict.load_attr_map("C:\\Users\ACER\PycharmProjects\SkipError\Code\data\\three_attr_mapping.txt")
+attr_ac = pickle.load(open("C:\\Users\ACER\PycharmProjects\SkipError\Code\data\\attr_ac.pkl","rb"))
+ent_dict = build_dict.load_entity_dict("C:\\Users\ACER\PycharmProjects\SkipError\Code\data\\all_entity.txt")
+val_dict = build_dict.load_val_dict("C:\\Users\ACER\PycharmProjects\SkipError\Code\data\\three_val.txt")
 
 
-#dirhead='/Users/jane/ideaProjects/elasticQAPy2.7/Code/kbdemo/data/'
+#dirhead='/Users/jane/ideaProjects/elasticQAPy2.7/code/kbdemo/data/'
 
 
-
+def first(request):
+    return render(request, "Firstpage.html", {})
 
 def home(request):
-    return render(request, "home.html", {})
+    print("enter home")
+    return render(request, "Homepage.html", {})
+
+def again(request):
+    return render(request, "Homepage.html", {})
+
+
+def language(request):
+    return render(request, "Language_square.html", {})
+
+def ai(request):
+    return render(request, "AI_qua_ans.html", {})
+
+def abus(request):
+    return render(request, "About_us.html", {})
+
+def lo(request):
+    return render(request, "Login.html", {})
+
+def setup(request):
+    return render(request, "Settingup.html", {})
 
 def search(request):
+    print("not entered")
     question = request.GET['question']
+    print("request.GET成功")
     val_d = _val_linking(question)
+    print("_val_linking成功")
     lf_question = translate_NL2LF(question)
+    print("translate_NL2LF成功")
     answer, msg, query_type = _parse_query(lf_question)
+    print("_parse_query成功")
 
-    # answer, msg, query_type = _parse_query(question)
+    #answer, msg, query_type = _parse_query(question)
     if msg == 'done':
+        #print("msg == 'done'")
         if query_type == 1:
-            return render(request, "entity.html", {"question":question, "ans":answer})
+            return render(request, "AI_qua_ans.html", {"question":question, "ans":answer})
         elif query_type == 4:
-            return render(request, "entity_list.html", {"question":question, "ans":answer})
+            return render(request, "AI_qua_ans.html", {"question":question, "ans":answer})
         elif query_type == 3:
             if isinstance(answer, int):
                 answer = str(answer)
-            return render(request, "message.html", {"question":question, "ans":answer})
+            return render(request, "AI_qua_ans.html", {"question":question, "ans":answer})
     elif msg == 'none':
-        return render(request, "message.html", {"question":question, "ans":"find nothing"})
+        #print("msg == 'none'")
+        return render(request, "AI_qua_ans.html", {"question":question, "ans":"find nothing"})
     else:
-        return render(request, "message.html", {"question":question, "ans":answer + " " + msg})
+        return render(request, "AI_qua_ans.html", {"question":question, "ans":answer + " " + msg})
 #网络寻求请求
 
 def _parse_query(question):
     answer, query_type = "", None
-    question = question.upper()
+
+
+    #改
+    #question = question.upper()
+
+
+
     question = question.replace(" ","")
     parts = re.split("：|:|<|>|<=|>=", question)
     en = _entity_linking(parts[0])
+    print(len(parts))
     if len(parts) < 2:
+        print("_search_single_subj")
         if len(en):
             query_type = 1
             answer,msg = _search_single_subj(en[-1])
         else:
             return question, '未识别到实体',-1
     elif 'AND' in question or 'OR' in question:
+        print("_search_multi_PO")
         query_type = 4
         bool_ops = re.findall('AND|OR',question)
         exps = re.split('AND|OR',question)        
         answer,msg = _search_multi_PO(exps, bool_ops)
         # answer = '#'.join(answer)
     elif len(_map_predicate(parts[0])) != 0:
+        print(" _search_multi_P")
         query_type = 4
-        answer, msg = _search_multi_PO([question],[])    
+        answer, msg = _search_multi_PO([question],[])
     elif len(en):
+        print("_search_multihop_SP")
         query_type = 3
         answer, msg = _search_multihop_SP(parts)
     else:
@@ -93,13 +132,13 @@ def _parse_query(question):
 #一种查询方法
 def _search_multihop_SP(parts):
     has_done = parts[0]
-    v = parts
+    v = parts[0]
     for i in range(1, len(parts)):
         en = _entity_linking(v)
         if not len(en):
             return '执行到: ' + has_done, '==> 对应的结果为:' + v + ', 知识库中没有该实体: ' + v
         card, msg = _search_single_subj(en[-1])#sss给出实体和给出对应的属性，如果为正常msq就是done
-        p = _map_predicate(parts)
+        p = _map_predicate(parts[1])
         if not len(p):
             return '执行到: ' + has_done, '==> 知识库中没有该属性: ' + parts[i]
         p = p[0]
@@ -416,14 +455,21 @@ def _remove_dup(word_list):
 def _map_predicate(pred_name, map_attr=True):   #找出一个字符串中是否包含知识库中的属性
 
     def _map_attr(word_list):
+        print(word_list)
         ans = []
         for word in word_list:
+            print(attr_map[word][0])
+            #ans.append(attr_map[word][0].encode('utf-8')[0].encode('utf-8'))
+            #ans.append(attr_map[word.encode('utf-8')][0].decode('utf-8'))
             ans.append(attr_map[word][0])
         return ans
 
     match = []
     #for w in attr_ac.iter(pred_name.encode('utf-8')):
+    #for w in attr_ac.iter('Modelica的InitialValueProblem'):
     for w in attr_ac.iter(pred_name):
+        #match.append(w[1][1].decode('utf-8'))
+        print(11111)
         match.append(w[1][1])
     if not len(match):
         return []
@@ -458,6 +504,7 @@ def _entity_linking(entity_name):    #找出一个字符串中是否包含知识
             for phrase in _generate_ngram_word(pp):
                 if phrase in ent_dict:
                     ans.append(phrase)
+    print(ans)
     return ans
 #用到上述的函数#找出一个字符串中是否包含知识库中的实体，这里是字典匹配，可以用检索代替
 def _val_linking(nl_query):
@@ -476,9 +523,11 @@ def _val_linking(nl_query):
     return ans
 
 if __name__ == '__main__':
-	#value, msg =_search_single_subj("ANBOR")  
-    #value, msg =_search_single_subj("ex")
+	#value, msg =_search_single_subj("Modelica")
+    #value, msg =_search_single_subj("Modelica")
     #=("姚明是谁")
-    v, msg = _search_multihop_SP("Modelica怎么解决参数估计问题")
-     
-    print (msg)
+    #v, msg = _search_multihop_SP("Modelica的初值问题")
+    #s=translate_NL2LF("Modelica的初值问题")
+    #answer, msg = _search_multi_PO(["Modelica的InitialValueProblem"],[])
+    answer, msg, query_type = _parse_query("Modelica:参数估计问题")
+    #print (msg)

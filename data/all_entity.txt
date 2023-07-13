@@ -1,4 +1,0 @@
-Modelica
-Python
-C++
-Java

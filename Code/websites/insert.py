@@ -33,3 +33,4 @@ def begin_insert_job(index_name, type_name, json_filepath, bulk_size=1000):
 
 if __name__ == '__main__':
     begin_insert_job("demo", "person", "../data/three.json")
+    #begin_insert_job("demo", "person", "../data/Person.json")

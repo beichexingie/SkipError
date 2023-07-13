@@ -26,13 +26,13 @@ import build_dict
 
 
 
-attr_map = build_dict.load_attr_map("D:\elasticQAPy27code\code\kbdemo\search\data\\attr_mapping.txt")
-attr_ac = pickle.load(open("D:\elasticQAPy27code\code\kbdemo\search\data\\attr_ac.pkl","rb"))
-ent_dict = build_dict.load_entity_dict("D:\elasticQAPy27code\code\kbdemo\search\data\\all_entity.txt")
-val_dict = build_dict.load_val_dict("D:\elasticQAPy27code\code\kbdemo\search\data\Person_val.txt")
+attr_map = build_dict.load_attr_map("C:\\Users\ACER\PycharmProjects\SkipError\Code\data\\attr_mapping.txt")
+attr_ac = pickle.load(open("C:\\Users\ACER\PycharmProjects\SkipError\Code\data\\attr_ac.pkl","rb"))
+ent_dict = build_dict.load_entity_dict("C:\\Users\ACER\PycharmProjects\SkipError\Code\data\\all_entity.txt")
+val_dict = build_dict.load_val_dict("C:\\Users\ACER\PycharmProjects\SkipError\Code\data\Person_val.txt")
 
 
-#dirhead='/Users/jane/ideaProjects/elasticQAPy2.7/Code/kbdemo/data/'
+#dirhead='/Users/jane/ideaProjects/elasticQAPy2.7/code/kbdemo/data/'
 
 
 

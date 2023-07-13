@@ -1,0 +1,6 @@
+jieba
+django
+pyahocorasick
+requests
+pickle
+flask

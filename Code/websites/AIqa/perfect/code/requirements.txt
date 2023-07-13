@@ -1,4 +1,0 @@
-jieba
-django
-pyahocorasick
-requests
