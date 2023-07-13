@@ -35,24 +35,24 @@ val_dict = build_dict.load_val_dict("D:\perfect\code\data\\three_val.txt")
 #dirhead='/Users/jane/ideaProjects/elasticQAPy2.7/code/kbdemo/data/'
 
 
-logging.basicConfig(filename="test.log", filemode="w", format="%(asctime)s %(name)s:%(levelname)s:%(message)s", datefmt="%d-%M-%Y %H:%M:%S", level=logging.DEBUG)
+
 
 def home(request):
-    logging.warning("enter home")
+    print("enter home")
     return render(request, "home.html", {})
 
 def search(request):
-    logging.warning("entere search")
+    print("not entered")
     question = request.GET['question']
-    logging.warning("request.GET成功")
+    print("request.GET成功")
     val_d = _val_linking(question)
-    logging.warning("_val_linking成功")
+    print("_val_linking成功")
     lf_question = translate_NL2LF(question)
-    logging.warning("translate_NL2LF成功")
+    print("translate_NL2LF成功")
     answer, msg, query_type = _parse_query(lf_question)
-    #print("_parse_query成功")
+    print("_parse_query成功")
 
-    # answer, msg, query_type = _parse_query(question)
+    #answer, msg, query_type = _parse_query(question)
     if msg == 'done':
         #print("msg == 'done'")
         if query_type == 1:
@@ -72,26 +72,36 @@ def search(request):
 
 def _parse_query(question):
     answer, query_type = "", None
-    question = question.upper()
+
+
+    #改
+    #question = question.upper()
+
+
+
     question = question.replace(" ","")
     parts = re.split("：|:|<|>|<=|>=", question)
     en = _entity_linking(parts[0])
     if len(parts) < 2:
+        print("_search_single_subj")
         if len(en):
             query_type = 1
             answer,msg = _search_single_subj(en[-1])
         else:
             return question, '未识别到实体',-1
     elif 'AND' in question or 'OR' in question:
+        print("_search_multi_PO")
         query_type = 4
         bool_ops = re.findall('AND|OR',question)
         exps = re.split('AND|OR',question)        
         answer,msg = _search_multi_PO(exps, bool_ops)
         # answer = '#'.join(answer)
     elif len(_map_predicate(parts[0])) != 0:
+        print(" _search_multi_P")
         query_type = 4
         answer, msg = _search_multi_PO([question],[])    
     elif len(en):
+        print("_search_multihop_SP")
         query_type = 3
         answer, msg = _search_multihop_SP(parts)
     else:
@@ -101,7 +111,7 @@ def _parse_query(question):
 #一种查询方法
 def _search_multihop_SP(parts):
     has_done = parts[0]
-    v = parts
+    v = parts[0]
     for i in range(1, len(parts)):
         en = _entity_linking(v)
         if not len(en):
@@ -426,12 +436,16 @@ def _map_predicate(pred_name, map_attr=True):   #找出一个字符串中是否�
     def _map_attr(word_list):
         ans = []
         for word in word_list:
-            ans.append(attr_map[word][0])
+
+            #ans.append(attr_map[word][0].encode('utf-8')[0].encode('utf-8'))
+            ans.append(attr_map[word.encode('utf-8')][0].decode('utf-8'))
         return ans
 
     match = []
     #for w in attr_ac.iter(pred_name.encode('utf-8')):
-    for w in attr_ac.iter(pred_name):
+    for w in attr_ac.iter('Modelica的InitialValueProblem'):
+    #for w in attr_ac.iter(pred_name):
+        #match.append(w[1][1].decode('utf-8'))
         match.append(w[1][1])
     if not len(match):
         return []
@@ -439,6 +453,8 @@ def _map_predicate(pred_name, map_attr=True):   #找出一个字符串中是否�
     ans = _remove_dup(match)
     if map_attr:
         ans = _map_attr(ans)
+
+    ans=[""]
     return ans
 #AC机判断
 def _generate_ngram_word(word_list_gen):
@@ -466,6 +482,7 @@ def _entity_linking(entity_name):    #找出一个字符串中是否包含知识
             for phrase in _generate_ngram_word(pp):
                 if phrase in ent_dict:
                     ans.append(phrase)
+    print(ans)
     return ans
 #用到上述的函数#找出一个字符串中是否包含知识库中的实体，这里是字典匹配，可以用检索代替
 def _val_linking(nl_query):
@@ -484,9 +501,10 @@ def _val_linking(nl_query):
     return ans
 
 if __name__ == '__main__':
-	#value, msg =_search_single_subj("ANBOR")  
-    #value, msg =_search_single_subj("ex")
+	#value, msg =_search_single_subj("Modelica")
+    #value, msg =_search_single_subj("Modelica")
     #=("姚明是谁")
-    v, msg = _search_multihop_SP("Modelica怎么解决参数估计问题")
-     
+    v, msg = _search_multihop_SP("Modelica的初值问题")
+    #s=translate_NL2LF("Modelica的初值问题")
+    #_parse_query("Modelica的初值问题")
     print (msg)
