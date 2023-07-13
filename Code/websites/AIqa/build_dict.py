@@ -11,7 +11,7 @@ val_list_file = './data/Person_val.txt'
 
 '''
 
-dirhead='/Users/jane/ideaProjects/elasticQAPy2.7/code/kbdemo/data/'
+dirhead='/Users/jane/ideaProjects/elasticQAPy2.7/Code/kbdemo/data/'
 
 entity_list_file =dirhead+ 'all_entity.txt'
 entity_out_path = dirhead +'ent_ac.pkl'

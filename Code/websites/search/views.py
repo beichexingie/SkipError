@@ -26,13 +26,13 @@ import build_dict
 
 
 
-attr_map = build_dict.load_attr_map("D:\elasticQAPy27code\code\kbdemo\search\data\\attr_mapping.txt")
-attr_ac = pickle.load(open("D:\elasticQAPy27code\code\kbdemo\search\data\\attr_ac.pkl","rb"))
-ent_dict = build_dict.load_entity_dict("D:\elasticQAPy27code\code\kbdemo\search\data\\all_entity.txt")
-val_dict = build_dict.load_val_dict("D:\elasticQAPy27code\code\kbdemo\search\data\Person_val.txt")
+attr_map = build_dict.load_attr_map("D:\perfect\code\kbdemo\search\data\\three_attr_mapping.txt")
+attr_ac = pickle.load(open("D:\perfect\code\kbdemo\search\data\\attr_ac.pkl","rb"))
+ent_dict = build_dict.load_entity_dict("D:\perfect\code\kbdemo\search\data\\all_entity.txt")
+val_dict = build_dict.load_val_dict("D:\perfect\code\data\\three_val.txt")
 
 
-#dirhead='/Users/jane/ideaProjects/elasticQAPy2.7/code/kbdemo/data/'
+#dirhead='/Users/jane/ideaProjects/elasticQAPy2.7/Code/kbdemo/data/'
 
 
 
@@ -60,6 +60,7 @@ def search(request):
         return render(request, "message.html", {"question":question, "ans":"find nothing"})
     else:
         return render(request, "message.html", {"question":question, "ans":answer + " " + msg})
+#网络寻求请求
 
 def _parse_query(question):
     answer, query_type = "", None
@@ -89,16 +90,16 @@ def _parse_query(question):
         msg = '未识别到实体或属性: ' + parts[0]
 
     return answer, msg, query_type
-
+#一种查询方法
 def _search_multihop_SP(parts):
     has_done = parts[0]
-    v = parts[0]
+    v = parts
     for i in range(1, len(parts)):
         en = _entity_linking(v)
         if not len(en):
             return '执行到: ' + has_done, '==> 对应的结果为:' + v + ', 知识库中没有该实体: ' + v
-        card, msg = _search_single_subj(en[-1])
-        p = _map_predicate(parts[i])
+        card, msg = _search_single_subj(en[-1])#sss给出实体和给出对应的属性，如果为正常msq就是done
+        p = _map_predicate(parts)
         if not len(p):
             return '执行到: ' + has_done, '==> 知识库中没有该属性: ' + parts[i]
         p = p[0]
@@ -109,6 +110,9 @@ def _search_multihop_SP(parts):
             v = str(v)
         has_done += ":" + parts[i]
     return v, 'done'
+#sms，我们用的查询方法
+
+
 
 def _search_multi_PO(exps, bool_ops):
     ans_list = []
@@ -227,10 +231,9 @@ def _search_multi_PO(exps, bool_ops):
 
         return ans, 'done'
         # return query.decode('utf-8'), 'done'
+#多属性跳转，不用的方法
 
-
-def _search_single_subj(entity_name):
-    
+def _search_single_subj(entity_name):#寻找实体，如果找到就返回属性
     
     headers = {'Content-type': 'application/json'}
     
@@ -257,6 +260,8 @@ def _search_single_subj(entity_name):
             else:
                 card[po['pred']] = po['obj']
         return card, 'done'
+#寻找实体，如果存在就返回它的所有属性和done，我们要用的
+
 
 def _search_single_subj_pred_pair(entity_name, attr_name):
     query = '{"query": {"constant_score": {"filter": {"bool": {"must": {"term": {"pred": "' + \
@@ -277,6 +282,8 @@ def _search_single_subj_pred_pair(entity_name, attr_name):
         #     return obj_en, 'entity'
         # else:
         return obj, 'str'
+#不用的方法
+
 
 def translate_NL2LF(nl_query):
     '''
@@ -386,7 +393,8 @@ def translate_NL2LF(nl_query):
                 else:
                     lf_query += ' AND ' + '{}:{}'.format(pred, v)
                 prev_pred.append(pred)
-    return lf_query
+    return lf_query#模板方法转换成
+#模板方法转换逻辑语言，不用
 
 def _remove_dup(word_list):
     '''
@@ -403,19 +411,20 @@ def _remove_dup(word_list):
         if not is_dup:
             distinct_word_list.append(word_list[i])
     return distinct_word_list
-
+#AC机判断，要用的函数
 
 def _map_predicate(pred_name, map_attr=True):   #找出一个字符串中是否包含知识库中的属性
 
     def _map_attr(word_list):
         ans = []
         for word in word_list:
-            ans.append(attr_map[word.encode('utf-8')][0].decode('utf-8'))
+            ans.append(attr_map[word][0])
         return ans
 
     match = []
-    for w in attr_ac.iter(pred_name.encode('utf-8')):
-        match.append(w[1][1].decode('utf-8'))
+    #for w in attr_ac.iter(pred_name.encode('utf-8')):
+    for w in attr_ac.iter(pred_name):
+        match.append(w[1][1])
     if not len(match):
         return []
 
@@ -423,7 +432,7 @@ def _map_predicate(pred_name, map_attr=True):   #找出一个字符串中是否�
     if map_attr:
         ans = _map_attr(ans)
     return ans
-
+#AC机判断
 def _generate_ngram_word(word_list_gen):
     '''
     args:
@@ -438,7 +447,7 @@ def _generate_ngram_word(word_list_gen):
         for j in range(0,n+1-i):
             ans.append(''.join(word_list[j:j+i]))
     return ans
-
+#切分
 def _entity_linking(entity_name):    #找出一个字符串中是否包含知识库中的实体，这里是字典匹配，可以用检索代替
     parts = re.split(r'的|是|有', entity_name)
     ans = []
@@ -447,10 +456,10 @@ def _entity_linking(entity_name):    #找出一个字符串中是否包含知识
         pp = jieba.cut(p)
         if pp is not None:
             for phrase in _generate_ngram_word(pp):
-                if phrase.encode('utf-8') in ent_dict:
+                if phrase in ent_dict:
                     ans.append(phrase)
     return ans
-
+#用到上述的函数#找出一个字符串中是否包含知识库中的实体，这里是字典匹配，可以用检索代替
 def _val_linking(nl_query):
     parts = re.split(r'的|是|有', nl_query)
     hit_val = []
@@ -470,6 +479,6 @@ if __name__ == '__main__':
 	#value, msg =_search_single_subj("ANBOR")  
     #value, msg =_search_single_subj("ex")
     #=("姚明是谁")
-    v, msg = _search_multihop_SP("姚明，职业")
+    v, msg = _search_multihop_SP("Modelica怎么解决参数估计问题")
      
     print (msg)

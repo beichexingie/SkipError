@@ -1,19 +1,23 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+from django.http import HttpResponse
+from django.template import RequestContext
 
 from django.shortcuts import render
 
 import requests
-
+import queue
+import urllib
 try:
     import simplejson as json
 except:
     import json
+from collections import defaultdict
 import jieba
 import re
 import _pickle as pickle
 
-from code.websites.AIqa import build_dict
+import build_dict
 
 #attr_map = build_dict.load_attr_map("/mnt/demo/search/data/attr_mapping.txt")
 #attr_ac = cPickle.load(open("/mnt/demo/search/data/attr_ac.pkl","rb"))
@@ -28,7 +32,7 @@ ent_dict = build_dict.load_entity_dict("D:\elasticQAPy27code\code\kbdemo\search\
 val_dict = build_dict.load_val_dict("D:\elasticQAPy27code\code\kbdemo\search\data\Person_val.txt")
 
 
-#dirhead='/Users/jane/ideaProjects/elasticQAPy2.7/code/kbdemo/data/'
+#dirhead='/Users/jane/ideaProjects/elasticQAPy2.7/Code/kbdemo/data/'
 
 
 
